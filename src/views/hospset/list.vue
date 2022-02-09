@@ -37,7 +37,23 @@
 
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
-          <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)" />
+          <el-button
+            type="danger"
+            size="mini"
+            icon="el-icon-delete"
+            @click="removeDataById(scope.row.id)">删除</el-button>
+          <el-button
+            v-if="scope.row.status==1"
+            type="primary"
+            size="mini"
+            icon="el-icon-delete"
+            @click="lockHospSet(scope.row.id,0)">锁定</el-button>
+          <el-button
+            v-if="scope.row.status==0"
+            type="warning"
+            size="mini"
+            icon="el-icon-delete"
+            @click="lockHospSet(scope.row.id,1)">取消锁定</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,6 +154,13 @@ export default {
     handleSelectionChange(selection) {
       this.multipleSelection = selection
       // console.log(this.multipleSelection)
+    },
+    // 锁定和解锁
+    lockHospSet(id, status) {
+      hospset.lockHospSet(id, status)
+        .then(response => {
+          this.getList(this.current)
+        })
     }
   }
 }
