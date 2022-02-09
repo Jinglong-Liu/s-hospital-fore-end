@@ -17,6 +17,15 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-pagination
+      :current-page="current"
+      :page-size="limit"
+      :total="total"
+      style="padding: 30px 0; text-align: center;"
+      layout="total, prev, pager, next, jumper"
+      @current-change="getList"
+    />
   </div>
 </template>
 <script>
@@ -38,7 +47,8 @@ export default {
   },
   methods: {
     // 医院设置列表
-    getList() {
+    getList(page = 1) {
+      this.current = page
       hospset.getHospSetList(this.current, this.limit, this.searchObj)
         .then(response => {
           // 返回集合赋值给list
