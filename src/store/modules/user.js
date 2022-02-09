@@ -54,7 +54,7 @@ const actions = {
 
     const { name, avatar } = data
 
-    commit('SET_ROLES', data.roles)
+    // commit('SET_ROLES', data.roles)
     commit('SET_NAME', name)
     commit('SET_AVATAR', avatar)
     // return new Promise((resolve, reject) => {
