@@ -1,6 +1,17 @@
 <template>
   <div class="app-container">
-    医院设置列表
+    <!--查询表单-->
+    <el-form :inline="true" class="demo-form-inline">
+      <el-form-item>
+        <el-input v-model="searchObj.hosname" placeholder="医院名称" />
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="searchObj.hoscode" placeholder="医院编号" />
+      </el-form-item>
+
+      <el-button type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
+    </el-form>
+    <!--医院列表-->
     <el-table
       :data="list"
       style="width: 100%"
@@ -17,7 +28,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <!--分页-->
     <el-pagination
       :current-page="current"
       :page-size="limit"
