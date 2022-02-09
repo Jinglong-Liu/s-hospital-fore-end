@@ -30,52 +30,67 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+    const data = { 'token': 'admin' }
+    setToken(data.token)
+    commit('SET_TOKEN', data.token)
+    // const { username, password } = userInfo
+    // return new Promise((resolve, reject) => {
+    //   login({ username: username.trim(), password: password }).then(response => {
+    //     const { data } = response
+    //     commit('SET_TOKEN', data.token)
+    //     setToken(data.token)
+    //     resolve()
+    //   }).catch(error => {
+    //     reject(error)
+    //   })
+    // })
   },
 
   // get user info
   getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
+    const data = { 'roles': 'admin',
+      'name': 'admin',
+      'avatar': 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
 
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
+    const { name, avatar } = data
 
-        const { name, avatar } = data
+    commit('SET_ROLES', data.roles)
+    commit('SET_NAME', name)
+    commit('SET_AVATAR', avatar)
+    // return new Promise((resolve, reject) => {
+    // getInfo(state.token).then(response => {
+    //   const { data } = response
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
+    //   if (!data) {
+    //     return reject('Verification failed, please Login again.')
+    //   }
+
+    //   const { name, avatar } = data
+
+    //   commit('SET_NAME', name)
+    //   commit('SET_AVATAR', avatar)
+    //   resolve(data)
+    // }).catch(error => {
+    //   reject(error)
+    // })
+    // })
   },
 
   // user logout
   logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+    // return new Promise((resolve, reject) => {
+    //   logout(state.token).then(() => {
+    //     removeToken() // must remove  token  first
+    //     resetRouter()
+    //     commit('RESET_STATE')
+    //     resolve()
+    //   }).catch(error => {
+    //     reject(error)
+    //   })
+    // })
+    removeToken()
+    resetRouter()
+    commit('RESET_STATE')
   },
 
   // remove token
