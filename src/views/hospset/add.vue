@@ -37,9 +37,24 @@ export default {
     }
   },
   created() {
-
+    // 获取路由id
+    // 调用接口，得到信息回显
+    if (this.$route.params && this.$route.params.id) {
+      const id = this.$route.params.id
+      this.getHospSet(id)
+    } else {
+    // 表单数据清空
+      this.hospitalSet = {}
+    }
   },
   methods: {
+    // 根据id查询
+    getHospSet(id) {
+      hospset.getHospSet(id)
+        .then(response => {
+          this.hospitalSet = response.data
+        })
+    },
     // 添加
     save() {
       hospset.saveHospSet(this.hospitalSet)
