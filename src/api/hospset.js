@@ -39,5 +39,13 @@ export default {
       url: `/admin/hosp/hospitalSet/lockHospitalSet/${id}/${status}`,
       method: 'put'
     })
+  },
+  // 添加医院设置
+  saveHospSet(hospitalSet) {
+    return request({
+      url: `/admin/hosp/hospitalSet/saveHospitalSet`,
+      method: 'post',
+      data: hospitalSet
+    })
   }
 }
