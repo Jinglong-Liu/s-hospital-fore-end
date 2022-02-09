@@ -23,5 +23,13 @@ export default {
       url: `/admin/hosp/hospitalSet/${id}`,
       method: 'delete'
     })
+  },
+  // 批量删除医院设置
+  batchRemoveHospSet(idList) {
+    return request({
+      url: `/admin/hosp/hospitalSet/batchRemove`,
+      method: 'delete',
+      data: idList
+    })
   }
 }

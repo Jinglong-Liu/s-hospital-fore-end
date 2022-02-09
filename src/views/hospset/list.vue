@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    医院设置列表
     <!--查询表单-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
@@ -11,11 +12,17 @@
 
       <el-button type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
     </el-form>
+    <!-- 批量删除 -->
+    <div>
+      <el-button type="danger" size="mini" @click="removeRows()">批量删除</el-button>
+    </div>
     <!--医院列表-->
     <el-table
       :data="list"
       style="width: 100%"
+      @selection-change="handleSelectionChange"
     >
+      <el-table-column type="selection" width="55" />
       <el-table-column type="index" width="50" label="序号" />
       <el-table-column prop="hosname" label="医院名称" />
       <el-table-column prop="hoscode" label="医院编号" />
@@ -30,7 +37,7 @@
 
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
-          <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)"/>
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)" />
         </template>
       </el-table-column>
     </el-table>
@@ -55,7 +62,8 @@ export default {
       limit: 3, // 每页
       searchObj: {}, // 条件封装对象
       list: [], // 每页数据集合
-      total: 0 // 总记录数
+      total: 0, // 总记录数
+      multipleSelection: [] // 批量选择中选择的记录列表
     }
   },
   created() {
@@ -97,6 +105,39 @@ export default {
             this.getList()
           })
       })
+    },
+    // 批量删除医院设置
+    removeRows() {
+      this.$confirm('此操作将永久删除医院的设置信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        var idList = []
+        // 遍历数组得到每个id值，设置到idList里面
+        // console.log(this.multipleSelection)
+        for (var i = 0; i < this.multipleSelection.length; i++) {
+          var obj = this.multipleSelection[i]
+          var id = obj.id
+          idList.push(id)
+        }
+        // 调用接口
+        hospset.batchRemoveHospSet(idList)
+          .then(response => {
+            // 提示
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 刷新页面
+            this.getList(1)
+          })
+      })
+    },
+    // 获取选择复选框的id值
+    handleSelectionChange(selection) {
+      this.multipleSelection = selection
+      // console.log(this.multipleSelection)
     }
   }
 }
