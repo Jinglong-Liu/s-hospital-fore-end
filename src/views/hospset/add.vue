@@ -70,6 +70,16 @@ export default {
     },
     update() {
       console.log('update')
+      hospset.updateHospSet(this.hospitalSet)
+        .then(response => {
+        // 提示
+          this.$message({
+            type: 'success',
+            message: '修改成功!'
+          })
+          // 跳转列表页面，使用路由跳转方式实现
+          this.$router.push({ path: '/hospSet/list' })
+        })
     },
     saveOrUpdate() {
       // 判断添加还是修改
