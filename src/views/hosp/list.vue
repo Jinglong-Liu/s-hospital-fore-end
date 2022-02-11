@@ -159,6 +159,13 @@ export default {
     changeSize(size) {
       this.limit = size
       this.fetchData(1)
+    },
+    // 更新医院上线状态
+    updateStatus(id, status) {
+      hospApi.updateStatus(id, status)
+        .then(response => {
+          this.fetchData(this.page)
+        })
     }
   }
 }
