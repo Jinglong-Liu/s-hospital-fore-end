@@ -89,7 +89,7 @@ export default {
       baseMap: {},
 
       page: 1, // 当前页
-      limit: 7, // 每页个数
+      limit: 6, // 每页个数
       total: 0, // 总页码
 
       scheduleList: [] // 排班详情
