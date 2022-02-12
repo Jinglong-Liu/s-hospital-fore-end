@@ -120,6 +120,7 @@ export default {
 
             this.getPage()
           }
+          this.getDetailSchedule()
         })
     },
     getPage(page = 1) {
