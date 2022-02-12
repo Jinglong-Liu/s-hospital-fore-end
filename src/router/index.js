@@ -202,7 +202,7 @@ export const constantRoutes = [
         path: 'hospital/schedule/:hoscode',
         name: '排班',
         component: () => import('@/views/hosp/schedule'),
-        meta: { title: '排版', noCache: true },
+        meta: { title: '排班', noCache: true },
         hidden: true
       }
     ]
